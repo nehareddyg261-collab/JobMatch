@@ -1,0 +1,29 @@
+public class CO6 {
+
+    public static void main(String[] args) {
+
+        int[] suitabilityScore = {60, 100, 120};
+        int[] skillRequirement = {10, 20, 30};
+
+        int capacity = 50;
+        int n = suitabilityScore.length;
+
+        int[][] dp = new int[n + 1][capacity + 1];
+
+        for (int i = 1; i <= n; i++) {
+            for (int w = 1; w <= capacity; w++) {
+
+                if (skillRequirement[i - 1] <= w) {
+                    dp[i][w] = Math.max(
+                            suitabilityScore[i - 1] +
+                            dp[i - 1][w - skillRequirement[i - 1]],
+                            dp[i - 1][w]);
+                } else {
+                    dp[i][w] = dp[i - 1][w];
+                }
+            }
+        }
+
+        System.out.println("Maximum Job Match Score = " + dp[n][capacity]);
+    }
+}
